@@ -1,0 +1,1 @@
+setup :; curl -L http://foundry.paradigm.xyz | sh && source /home/runner/.bashrc && ~/.foundry/bin/foundryup && cat README.md
