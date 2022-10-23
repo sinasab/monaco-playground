@@ -5,6 +5,7 @@ import "forge-std/Test.sol";
 
 import "../src/Monaco.sol";
 import "../src/cars/ExampleCar.sol";
+import "../src/cars/MyCar.sol";
 
 contract MonacoTest is Test {
     Monaco monaco;
@@ -14,20 +15,13 @@ contract MonacoTest is Test {
     }
 
     function testGames() public {
-        ExampleCar w1 = new ExampleCar(monaco);
+        ExampleCar w1 = new MyCar(monaco);
         ExampleCar w2 = new ExampleCar(monaco);
         ExampleCar w3 = new ExampleCar(monaco);
 
         monaco.register(w1);
         monaco.register(w2);
         monaco.register(w3);
-
-        // // You can throw these CSV logs into Excel/Sheets/Numbers or a similar tool to visualize a race!
-        // vm.writeFile(string.concat("logs/", vm.toString(address(w1)), ".csv"), "turns,balance,speed,y\n");
-        // vm.writeFile(string.concat("logs/", vm.toString(address(w2)), ".csv"), "turns,balance,speed,y\n");
-        // vm.writeFile(string.concat("logs/", vm.toString(address(w3)), ".csv"), "turns,balance,speed,y\n");
-        // vm.writeFile("logs/prices.csv", "turns,accelerateCost,shellCost\n");
-        // vm.writeFile("logs/sold.csv", "turns,acceleratesBought,shellsBought\n");
 
         while (monaco.state() != Monaco.State.DONE) {
             monaco.play(1);
@@ -41,41 +35,6 @@ contract MonacoTest is Test {
                 emit log_named_uint("balance", car.balance);
                 emit log_named_uint("speed", car.speed);
                 emit log_named_uint("y", car.y);
-
-                // vm.writeLine(
-                //     string.concat("logs/", vm.toString(address(car.car)), ".csv"),
-                //     string.concat(
-                //         vm.toString(uint256(monaco.turns())),
-                //         ",",
-                //         vm.toString(car.balance),
-                //         ",",
-                //         vm.toString(car.speed),
-                //         ",",
-                //         vm.toString(car.y)
-                //     )
-                // );
-
-                // vm.writeLine(
-                //     "logs/prices.csv",
-                //     string.concat(
-                //         vm.toString(uint256(monaco.turns())),
-                //         ",",
-                //         vm.toString(monaco.getAccelerateCost(1)),
-                //         ",",
-                //         vm.toString(monaco.getShellCost(1))
-                //     )
-                // );
-
-                // vm.writeLine(
-                //     "logs/sold.csv",
-                //     string.concat(
-                //         vm.toString(uint256(monaco.turns())),
-                //         ",",
-                //         vm.toString(monaco.getActionsSold(Monaco.ActionType.ACCELERATE)),
-                //         ",",
-                //         vm.toString(monaco.getActionsSold(Monaco.ActionType.SHELL))
-                //     )
-                // );
             }
         }
 
